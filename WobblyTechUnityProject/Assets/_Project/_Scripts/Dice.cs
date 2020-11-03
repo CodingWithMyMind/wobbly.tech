@@ -7,18 +7,9 @@ using UnityEngine;
 
 public class Dice : MonoBehaviour
 {
-    public Transform one;
-    public Transform two;
-    public Transform three;
-    public Transform four;
-    public Transform five;
-    public Transform six;
-
     public Transform[] Numbers;
 
     private Rigidbody rb;
-
-    public bool stationary;
 
     bool rollComplete;
 
@@ -31,13 +22,16 @@ public class Dice : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // check to see if rigid body stopped moving
         if(rb.velocity == Vector3.zero)
         {
+            // check to see if the roll calculation is completed
             if (!rollComplete)
             {
+                // really high starting number that should always get replaced
                 float lowestYThisRoll = 1000;
-                int numberFacingDown = 0;
 
+                int numberFacingDown = 0;
 
                 for (int i = 0; i < Numbers.Length; i++)
                 {
@@ -48,6 +42,7 @@ public class Dice : MonoBehaviour
                     }
                 }
 
+                // sum of opposite sides add to 7 so can figure top number from 7 - bnumber facing down
                 int numberFacingUp = 7 - numberFacingDown; 
                 Debug.Log(numberFacingUp);
                 rollComplete = true;

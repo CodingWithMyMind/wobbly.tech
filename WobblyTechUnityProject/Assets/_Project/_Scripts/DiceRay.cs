@@ -52,19 +52,19 @@ public class DiceRay : MonoBehaviour
                // for loop to iterate all the side transforms
                 for (int i = 0; i < Sides.Length; i++)
                 {
-                    // check to see if the current side in the array has the lowest y value/ closest to the ground
-                    //if (Sides[i].position.y < lowestYThisRoll)
                     RaycastHit hit;
-                    //Vector3 fwd = Sides[i].transform.localPositio;
                     Vector3 fwd = Sides[i].forward;
+                    Vector3 pos = Sides[i].position;
 
-                    if (Physics.Raycast(Sides[i].transform.position, fwd, out hit, 50))
+                    if (Physics.Raycast(pos, fwd, out hit, 50))
                     {
-                        Debug.DrawRay(Sides[i].transform.position, fwd, Color.blue, 100.0f,false);
+                        Debug.DrawRay(pos, fwd, Color.blue, 100.0f,false);
                         if (hit.distance < shortestRay)
                         {
                             shortestRay = hit.distance;
                             numberFacingDown = i + 1;
+                            Debug.Log("shortest ray is " + hit.distance + "by side " + numberFacingDown);
+
                         }
                     }
                 }

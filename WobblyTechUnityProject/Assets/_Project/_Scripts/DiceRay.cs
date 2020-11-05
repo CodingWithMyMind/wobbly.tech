@@ -62,7 +62,7 @@ public class DiceRay : MonoBehaviour
                         if (hit.distance < shortestRay)
                         {
                             shortestRay = hit.distance;
-                            numberFacingDown = i + 1;
+                            numberFacingDown = i + 1; 
                             Debug.Log("shortest ray is " + hit.distance + "by side " + numberFacingDown);
 
                         }

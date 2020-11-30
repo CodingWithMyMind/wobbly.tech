@@ -5,7 +5,13 @@ using UnityEngine;
 public class TankController : MonoBehaviour
 {
     [SerializeField]
-    float speed = 20;
+    private float forwardSpeed = 5;
+
+    [SerializeField]
+    private float turnSpeed = 10;
+
+    private float horizontalInput;
+    private float forwardInput;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,6 +21,10 @@ public class TankController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector3.forward * Time.deltaTime * speed);
+        horizontalInput = Input.GetAxis("Horizontal");
+        forwardInput = Input.GetAxis("Vertical");
+
+        transform.Translate(Vector3.forward * Time.deltaTime * forwardSpeed * forwardInput);
+        transform.Rotate(Vector3.up * Time.deltaTime * turnSpeed * horizontalInput);
     }
 }

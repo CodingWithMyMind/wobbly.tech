@@ -30,11 +30,12 @@ public class PlaneController : MonoBehaviour
         horizontalInput = Input.GetAxis("Horizontal");
         forwardInput = Input.GetAxis("Vertical");
 
-        transform.Translate(transform.forward * Time.deltaTime * forwardSpeed);
+        
+        transform.Translate(transform.forward * Time.deltaTime * forwardSpeed, Space.World);
 
         transform.Rotate(Vector3.back * Time.deltaTime * turnSpeed * horizontalInput);
 
-        transform.Rotate(Vector3.left * Time.deltaTime * pitchSpeed * forwardInput);
+        transform.Rotate(Vector3.left * Time.deltaTime * pitchSpeed * -forwardInput);
 
     }
 }

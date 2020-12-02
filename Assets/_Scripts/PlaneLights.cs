@@ -26,7 +26,7 @@ public class PlaneLights : MonoBehaviour
             lights[i].SetActive(true);
         }
         InvokeRepeating("TurnLightsOff", 0.2f, 1f);
-        Random.Range()
+        
         
     }
     public void TurnLightsOff()

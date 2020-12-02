@@ -5,10 +5,21 @@ using UnityEngine;
 public class TankController : MonoBehaviour
 {
     [SerializeField]
+    GameObject projectilePrefab;
+
+    [SerializeField]
+    float shootForce = 10;
+
+    [SerializeField]
+    Transform barrelTip;
+
+    [SerializeField]
     private float forwardSpeed = 5;
 
     [SerializeField]
     private float turnSpeed = 10;
+
+
 
     private float horizontalInput;
     private float forwardInput;
@@ -26,5 +37,14 @@ public class TankController : MonoBehaviour
 
         transform.Translate(Vector3.forward * Time.deltaTime * forwardSpeed * forwardInput);
         transform.Rotate(Vector3.up * Time.deltaTime * turnSpeed * horizontalInput);
+
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            GameObject shot = GameObject.Instantiate(projectilePrefab, barrelTip.position, transform.rotation);
+            shot.GetComponent<Rigidbody>().AddForce(barrelTip.forward * shootForce);
+        }
     }
+
+
 }

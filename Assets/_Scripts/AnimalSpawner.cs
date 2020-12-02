@@ -8,16 +8,22 @@ public class AnimalSpawner : MonoBehaviour
 {
 
     [SerializeField]
-    GameObject[] animals;
+    Transform spawnPoint;
 
     [SerializeField]
-    int xRange;
+    GameObject[] objects;
+
+    [SerializeField]
+    int randomXRange;
+
+    [SerializeField]
+    bool randomXPos;
 
     int index;
     // Start is called before the first frame update
     void Start()
     {
-        InvokeRepeating("SpawnAnimal", 3, 1);
+        InvokeRepeating("Spawn", 3, 1);
     }
 
     // Update is called once per frame
@@ -26,13 +32,16 @@ public class AnimalSpawner : MonoBehaviour
         
 
     }
-    void SpawnAnimal()
+    void Spawn()
     {
-        index = Random.Range(0, animals.Length);
+        index = Random.Range(0, objects.Length);
+        int x = 0; ;
+        if (randomXPos)
+        {
+           x = Random.Range(-randomXRange, randomXRange + 1);
+        }
+        
 
-
-        int x = Random.Range(-xRange, xRange + 1);
-
-        Instantiate(animals[index], new Vector3(x, 1, 20), animals[index].transform.rotation);
+        Instantiate(objects[index], new Vector3(spawnPoint.position.x, spawnPoint.position.y, spawnPoint.position.z), objects[index].transform.rotation);
     }
 }

@@ -19,6 +19,8 @@ public class AnimalSpawner : MonoBehaviour
     [SerializeField]
     bool randomXPos;
 
+    //GameObject spawnedObjects;
+
     int index;
     // Start is called before the first frame update
     void Start()
@@ -35,13 +37,12 @@ public class AnimalSpawner : MonoBehaviour
     void Spawn()
     {
         index = Random.Range(0, objects.Length);
-        int x = 0; ;
+        int xOffSet = 0; ;
         if (randomXPos)
         {
-           x = Random.Range(-randomXRange, randomXRange + 1);
+           xOffSet = Random.Range(-randomXRange, randomXRange + 1);
         }
-        
-
         Instantiate(objects[index], new Vector3(spawnPoint.position.x, spawnPoint.position.y, spawnPoint.position.z), objects[index].transform.rotation);
+        
     }
 }

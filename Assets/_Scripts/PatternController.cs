@@ -75,7 +75,6 @@ public class PatternController : MonoBehaviour
 
     private void CheckIfInRow()
     {
-
         int row = UnityEngine.Random.Range(0, columns);
 
         bool shouldMoveLeft = (UnityEngine.Random.Range(0f, 1f) > 0.5f);
@@ -84,19 +83,17 @@ public class PatternController : MonoBehaviour
         float lowestX = 10000;
 
 
-
-
         for (int i = 0; i < spawnedIcons.Count; i++)
         {
             if(spawnedIcons[i].transform.position.y == row*100)
             {
                 MoveRow(i,shouldMoveLeft);
 
+
                 if(spawnedIcons[i].transform.position.x > highestX)
                 {
                     highestX = spawnedIcons[i].transform.position.x;
                     lastInRowLocation = spawnedIcons[i].transform.position;
-
                 }
                 if (spawnedIcons[i].transform.position.x < lowestX)
                 {
@@ -104,12 +101,12 @@ public class PatternController : MonoBehaviour
                     firstInRowLocation = spawnedIcons[i].transform.position;
                 }
             }
-
         }
 
         if (!shouldMoveLeft)
         {
             SpawnIcon(lastInRowLocation);
+            //Destroy
         }
         if (shouldMoveLeft)
         {

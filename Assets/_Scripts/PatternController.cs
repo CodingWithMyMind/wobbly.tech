@@ -24,8 +24,9 @@ public class PatternController : MonoBehaviour
         {
             for (int x = 0; x < rows; x++)
             {
-                
-                GameObject instance = Instantiate(icons[0],canvas.transform);
+
+                int randomIconIndex = UnityEngine.Random.Range(0,icons.Length);
+                GameObject instance = Instantiate(icons[randomIconIndex],canvas.transform);
                 Debug.Log("spawning x:" + x + " y:" + y);
 
                 Vector3 pos = new Vector3(x * 100, y * 100, 0);
@@ -63,7 +64,6 @@ public class PatternController : MonoBehaviour
         for (int i = 0; i < spawnedIcons.Count; i++)
         {
             
-
             if(spawnedIcons[i].transform.position.y == row*100)
             {
                 spawnedIcons[i].transform.DOPunchScale(Vector3.one , 0.5f, 10, 10);

@@ -15,34 +15,44 @@ public class PatternController : MonoBehaviour
     public int rows = 3;
     public int columns = 3;
 
-    Vector3 lastInRowLocation;
-    Vector3 firstInRowLocation;
-
 
     // floats to store the high/lowest x positions
-    float highestX = 0;
     float lowestX = 10000;
+    float highestX = 0;
+    // highest lowest gameobjects
+    GameObject highestXObj;
+    GameObject lowestXObj;
 
+    // floats to store the high/lowest y positions
+    float lowestY = 10000;
+    float highestY = 0;
+    // highest lowest gameobjects
+    GameObject highestYObj;
+    GameObject lowestYObj;
 
-    public List<GameObject> spawnedIcons = new List<GameObject>();
+    private List<GameObject> spawnedIcons = new List<GameObject>();
 
     //public GameObject[] spawnedIcons;
     // Start is called before the first frame update
     void Start()
     {
+
         int index = 0;
+
+        // initial spawn icons loop
         for (int y = 0; y < columns; y++)
         {
             for (int x = 0; x < rows; x++)
             {
                 Vector3 pos = new Vector3(x * 100, y * 100, 0);
-                Debug.Log(pos);
-
                 SpawnIcon(pos);
-
                 index++;
             }
         }
+
+        // make camera be at middle of the icons
+        Vector3 newCameraPos = new Vector3((44.444f * rows), (44.444f * columns), camera.transform.position.z);
+        camera.transform.position = newCameraPos;
     }
 
     private void SpawnIcon(Vector3 spawnPosition)
@@ -55,8 +65,6 @@ public class PatternController : MonoBehaviour
         // add to spawned items list
         spawnedIcons.Add(instance);
     }
-
-
 
     // Update is called once per frame
     void Update()
@@ -76,60 +84,84 @@ public class PatternController : MonoBehaviour
     {
         // choose a random row
         int row = UnityEngine.Random.Range(0, columns);
-
         // random choice of row moving left or right
         bool shouldMoveLeft = (UnityEngine.Random.Range(0f, 1f) > 0.5f);
 
-
-
+        // loop through all icons
         for (int i = 0; i < spawnedIcons.Count; i++)
         {
             // if the spawned icon has is on the correct y value/row
-            if(spawnedIcons[i].transform.position.y == row*100)
+            if (spawnedIcons[i].transform.position.y == row * 100)
             {
-
-                // move the row
-                MoveRow(i,shouldMoveLeft);
-
-                AddAndReplaceIcons(i);
-
-                //
-
+                MoveRow(i, shouldMoveLeft);
+                HighestLowestX(i);
             }
         }
 
+        AddAndReplaceIconsX(shouldMoveLeft);
+
+        // reset values
+        highestX = 0;
+        lowestX = 100000;
+    }
+
+    private void AddAndReplaceIconsX(bool shouldMoveLeft)
+    {
         if (!shouldMoveLeft)
         {
-            SpawnIcon(lastInRowLocation);
-            //Destroy
+            // spawn a new icon at the highest x location
+            SpawnIcon(highestXObj.transform.position);
+            // remove the lowest x object from the lit and destroy
+            spawnedIcons.Remove(lowestXObj);
+            Destroy(lowestXObj);
         }
         if (shouldMoveLeft)
         {
-            SpawnIcon(firstInRowLocation);
+            // spawn a new icon at the lowest x location
+            SpawnIcon(lowestXObj.transform.position);
+            // remove the highest x object from the list and destroy
+            spawnedIcons.Remove(highestXObj);
+            Destroy(highestXObj);
         }
-
     }
 
-    private void AddAndReplaceIcons(int i)
+    private void AddAndReplaceIconsY(bool shouldMoveUp)
+    {
+        if (!shouldMoveUp)
+        {
+            // spawn a new icon at the highest y location
+            SpawnIcon(highestYObj.transform.position);
+            // remove the lowest y object from the list and destroy
+            spawnedIcons.Remove(lowestYObj);
+            Destroy(lowestYObj);
+        }
+        if (shouldMoveUp)
+        {
+            // spawn a new icon at the lowest y location
+            SpawnIcon(lowestYObj.transform.position);
+            // remove the highest y object from the list and destroy
+            spawnedIcons.Remove(highestYObj);
+            Destroy(highestYObj);
+        }
+    }
+
+
+    private void HighestLowestX(int i)
     {
         // if current icon has higher x than the previous highest x
         if (spawnedIcons[i].transform.position.x > highestX)
         {
-            // the location of the last icon in the row
-            lastInRowLocation = spawnedIcons[i].transform.position;
-            // set new highest x
             highestX = spawnedIcons[i].transform.position.x;
+            highestXObj = spawnedIcons[i];
         }
         if (spawnedIcons[i].transform.position.x < lowestX)
         {
-            // the location of the first icon in the row
             lowestX = spawnedIcons[i].transform.position.x;
-            // set new lowest x
-            firstInRowLocation = spawnedIcons[i].transform.position;
+            lowestXObj = spawnedIcons[i];
         }
     }
 
-    private void MoveRow(int index,bool moveLeft)
+    private void MoveRow(int index, bool moveLeft)
     {
         Vector3 endMoveLocation;
         if (moveLeft)
@@ -148,13 +180,58 @@ public class PatternController : MonoBehaviour
 
     private void CheckIfInColumn()
     {
-        int column = UnityEngine.Random.Range(0, rows);
+        // choose a random column
+        int column = UnityEngine.Random.Range(0, columns);
+        // random choice of row moving left or right
+        bool shouldMoveUp = (UnityEngine.Random.Range(0f, 1f) > 0.5f);
+
+        // loop through all icons
         for (int i = 0; i < spawnedIcons.Count; i++)
         {
-            if (spawnedIcons[i].transform.position.x == column * 100)
+            // if the spawned icon has is on the correct y value/row
+            if (spawnedIcons[i].transform.position.x ==  column * 100)
             {
-                spawnedIcons[i].transform.DOPunchScale(Vector3.one , 0.5f, 10, 10);
+                MoveColumn(i, shouldMoveUp);
+                HighestLowestY(i);
             }
+        }
+
+        AddAndReplaceIconsY(shouldMoveUp);
+
+        // reset values
+        highestY = 0;
+        lowestY = 100000;
+    }
+
+    private void MoveColumn(int index, bool moveUp)
+    {
+        Vector3 endMoveLocation;
+        if (moveUp)
+        {
+            // end location of the current icon should be its current possiton but + 100 on x
+            endMoveLocation = new Vector3(spawnedIcons[index].transform.position.x, spawnedIcons[index].transform.position.y + 100, spawnedIcons[index].transform.position.z);
+        }
+        else
+        {
+            // end location of the current icon should be its current possiton but + 100 on x
+            endMoveLocation = new Vector3(spawnedIcons[index].transform.position.x , spawnedIcons[index].transform.position.y - 100, spawnedIcons[index].transform.position.z);
+        }
+        // apply movement
+        spawnedIcons[index].transform.DOMove(endMoveLocation, 1);
+    }
+
+    private void HighestLowestY(int i)
+    {
+        // if current icon has higher x than the previous highest x
+        if (spawnedIcons[i].transform.position.y > highestY)
+        {
+            highestY = spawnedIcons[i].transform.position.y;
+            highestYObj = spawnedIcons[i];
+        }
+        if (spawnedIcons[i].transform.position.y < lowestY)
+        {
+            lowestY = spawnedIcons[i].transform.position.y;
+            lowestYObj = spawnedIcons[i];
         }
     }
 }

@@ -180,7 +180,7 @@ public class PatternController : MonoBehaviour
             endMoveLocation = new Vector3(spawnedIcons[index].transform.position.x - 100, spawnedIcons[index].transform.position.y, spawnedIcons[index].transform.position.z);
         }
         // apply movement
-        spawnedIcons[index].transform.DOMove(endMoveLocation, 2).SetEase(Ease.InOutQuart);
+        spawnedIcons[index].transform.DOMove(endMoveLocation, 1.9f).SetEase(Ease.InOutQuart);
     }
 
     private void CheckIfInColumn()
@@ -222,7 +222,7 @@ public class PatternController : MonoBehaviour
             endMoveLocation = new Vector3(spawnedIcons[index].transform.position.x , spawnedIcons[index].transform.position.y - 100, spawnedIcons[index].transform.position.z);
         }
         // apply movement
-        spawnedIcons[index].transform.DOMove(endMoveLocation, 2).SetEase(Ease.InOutQuart);
+        spawnedIcons[index].transform.DOMove(endMoveLocation, 1.9f).SetEase(Ease.InOutQuart);
     }
 
     private void HighestLowestY(int i)

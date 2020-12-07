@@ -598,10 +598,10 @@ MonoBehaviour:
   - {fileID: 1443356154404920459, guid: 447a6ab9d8721434ead719bea2ef74ec, type: 3}
   - {fileID: 1443356154404920459, guid: 3fc1835fc5ba1c34aa15f79a8b1ffbe0, type: 3}
   - {fileID: 1443356154404920459, guid: e3e70835aa25fb14485e78dd3d59fad8, type: 3}
+  camera: {fileID: 181262965}
   canvas: {fileID: 1134904330}
   rows: 9
   columns: 9
-  spawnedIcons: []
 --- !u!4 &127416990
 Transform:
   m_ObjectHideFlags: 0
@@ -806,7 +806,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 400, y: 400}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!20 &181262965
@@ -836,7 +836,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 500
+  orthographic size: 360
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -7932,6 +7932,7 @@ GameObject:
   - component: {fileID: 1134904331}
   - component: {fileID: 1134904336}
   - component: {fileID: 1134904335}
+  - component: {fileID: 1134904337}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -8058,6 +8059,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1134904330}
   m_CullTransparentMesh: 0
+--- !u!114 &1134904337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1134904330}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShowMaskGraphic: 1
 --- !u!1 &1181894833
 GameObject:
   m_ObjectHideFlags: 0

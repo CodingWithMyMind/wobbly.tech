@@ -36,9 +36,7 @@ public class PatternController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
         int index = 0;
-
         // initial spawn icons loop
         for (int y = 0; y < columns; y++)
         {
@@ -52,7 +50,14 @@ public class PatternController : MonoBehaviour
 
         // make camera be at middle of the icons
         Vector3 newCameraPos = new Vector3((44.444f * rows), (44.444f * columns), camera.transform.position.z);
+
+
+        camera.orthographicSize = rows * 40;
+
         camera.transform.position = newCameraPos;
+
+        InvokeRepeating("CheckIfInRow", 0, 4);
+        InvokeRepeating("CheckIfInColumn", 2, 4);
     }
 
     private void SpawnIcon(Vector3 spawnPosition)
@@ -83,7 +88,7 @@ public class PatternController : MonoBehaviour
     private void CheckIfInRow()
     {
         // choose a random row
-        int row = UnityEngine.Random.Range(0, columns);
+        int row = UnityEngine.Random.Range(1, columns-1);
         // random choice of row moving left or right
         bool shouldMoveLeft = (UnityEngine.Random.Range(0f, 1f) > 0.5f);
 
@@ -175,13 +180,13 @@ public class PatternController : MonoBehaviour
             endMoveLocation = new Vector3(spawnedIcons[index].transform.position.x - 100, spawnedIcons[index].transform.position.y, spawnedIcons[index].transform.position.z);
         }
         // apply movement
-        spawnedIcons[index].transform.DOMove(endMoveLocation, 1);
+        spawnedIcons[index].transform.DOMove(endMoveLocation, 2).SetEase(Ease.InOutQuart);
     }
 
     private void CheckIfInColumn()
     {
         // choose a random column
-        int column = UnityEngine.Random.Range(0, columns);
+        int column = UnityEngine.Random.Range(1, columns-1);
         // random choice of row moving left or right
         bool shouldMoveUp = (UnityEngine.Random.Range(0f, 1f) > 0.5f);
 
@@ -217,7 +222,7 @@ public class PatternController : MonoBehaviour
             endMoveLocation = new Vector3(spawnedIcons[index].transform.position.x , spawnedIcons[index].transform.position.y - 100, spawnedIcons[index].transform.position.z);
         }
         // apply movement
-        spawnedIcons[index].transform.DOMove(endMoveLocation, 1);
+        spawnedIcons[index].transform.DOMove(endMoveLocation, 2).SetEase(Ease.InOutQuart);
     }
 
     private void HighestLowestY(int i)

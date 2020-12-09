@@ -3,10 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class PatternController : MonoBehaviour
 {
-    public GameObject[] icons;
+    [SerializeField]
+    private float speed = 2f;
+
+    private float delay;
+
+    public GameObject iconPrefab;
+    public Sprite[] images;
 
     public Camera camera;
 
@@ -30,6 +37,7 @@ public class PatternController : MonoBehaviour
     GameObject highestYObj;
     GameObject lowestYObj;
 
+
     private List<GameObject> spawnedIcons = new List<GameObject>();
 
     //public GameObject[] spawnedIcons;
@@ -52,19 +60,25 @@ public class PatternController : MonoBehaviour
         Vector3 newCameraPos = new Vector3((44.444f * rows), (44.444f * columns), camera.transform.position.z);
 
 
-        camera.orthographicSize = rows * 40;
+        camera.orthographicSize = rows * 24;
+
+
+
 
         camera.transform.position = newCameraPos;
 
-        InvokeRepeating("CheckIfInRow", 0, 4);
-        InvokeRepeating("CheckIfInColumn", 2, 4);
+        delay = speed / 2;
+
+        InvokeRepeating("CheckIfInRow", 0, speed);
+        InvokeRepeating("CheckIfInColumn", delay, speed);
     }
 
     private void SpawnIcon(Vector3 spawnPosition)
     {
         // choose random icon and spawn it
-        int randomIconIndex = UnityEngine.Random.Range(0, icons.Length);
-        GameObject instance = Instantiate(icons[randomIconIndex], canvas.transform);
+        int randomImageIndex = UnityEngine.Random.Range(0, images.Length);
+        GameObject instance = Instantiate(iconPrefab, canvas.transform);
+        instance.GetComponentInChildren<Image>().sprite = images[randomImageIndex];
         // set position of new spawned item to passed in position
         instance.transform.SetPositionAndRotation(spawnPosition, Quaternion.identity);
         // add to spawned items list
@@ -180,7 +194,7 @@ public class PatternController : MonoBehaviour
             endMoveLocation = new Vector3(spawnedIcons[index].transform.position.x - 100, spawnedIcons[index].transform.position.y, spawnedIcons[index].transform.position.z);
         }
         // apply movement
-        spawnedIcons[index].transform.DOMove(endMoveLocation, 1.9f).SetEase(Ease.InOutQuart);
+        spawnedIcons[index].transform.DOMove(endMoveLocation, delay - 0.1f).SetEase(Ease.InOutQuart);
     }
 
     private void CheckIfInColumn()
@@ -222,7 +236,7 @@ public class PatternController : MonoBehaviour
             endMoveLocation = new Vector3(spawnedIcons[index].transform.position.x , spawnedIcons[index].transform.position.y - 100, spawnedIcons[index].transform.position.z);
         }
         // apply movement
-        spawnedIcons[index].transform.DOMove(endMoveLocation, 1.9f).SetEase(Ease.InOutQuart);
+        spawnedIcons[index].transform.DOMove(endMoveLocation, delay - 0.1f).SetEase(Ease.InOutQuart);
     }
 
     private void HighestLowestY(int i)

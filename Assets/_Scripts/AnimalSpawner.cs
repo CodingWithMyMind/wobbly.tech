@@ -42,7 +42,7 @@ public class AnimalSpawner : MonoBehaviour
         {
            xOffSet = Random.Range(-randomXRange, randomXRange + 1);
         }
-        Instantiate(objects[index], new Vector3(spawnPoint.position.x, spawnPoint.position.y, spawnPoint.position.z), objects[index].transform.rotation);
+        //Instantiate(objects[index], new Vector3(spawnPoint.position.x, spawnPoint.position.y, spawnPoint.position.z), objects[index].transform.rotation);
         
     }
 }

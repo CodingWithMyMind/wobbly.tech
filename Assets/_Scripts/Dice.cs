@@ -32,7 +32,7 @@ public class Dice : MonoBehaviour
         // make text look at camera
         TextFeedbackInstance.GetComponentInChildren<Text>().text = rollValue.ToString();
         
-        TextFeedbackInstance.transform.LookAt(transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
+        //TextFeedbackInstance.transform.LookAt(transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
     }
 
     // Update is called once per framed

@@ -66,15 +66,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    /* 
-     * Public Functions to be called from UI elements or from other scripts etc
-     * these will then change the game state to be ran every frame. Can also be 
-     * used like constructers to set up play states 
-    */
-
-
-
-
     public void EnterMenu()
     {
 
@@ -98,14 +89,14 @@ public class GameManager : MonoBehaviour
         state = State.Main;
     }
 
-IEnumerator AsynchronousLoad(string scene)
+    IEnumerator AsynchronousLoad(string scene)
     {
         yield return null;
 
         AsyncOperation ao = SceneManager.LoadSceneAsync(scene);
-        ao.allowSceneActivation = false;
+        //ao.allowSceneActivation = false;
 
-        while (!ao.isDone)
+/*        while (!ao.isDone)
         {
             // [0, 0.9] > [0, 1]
             float progress = Mathf.Clamp01(ao.progress / 0.9f);
@@ -120,7 +111,7 @@ IEnumerator AsynchronousLoad(string scene)
             }
 
             yield return null;
-        }
+        }*/
     }
 
 

@@ -13,6 +13,8 @@ public class CameraController : MonoBehaviour
     {
         allCameras = FindObjectsOfType<Camera>();
         Debug.Log(allCameras.Length + "Cameras Found");
+
+
     }
 
 

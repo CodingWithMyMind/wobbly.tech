@@ -13,11 +13,11 @@ public class TankController : MonoBehaviour
 
     public AudioSource movementAudioSource; 
     // Audio clip of engine at idle
-    public AudioClip engineIdilingSound;
+    public AudioClip engineIdlingSound;
     // Audio clip of engine driving
     public AudioClip engineDrivingSound;
     
-    public float m_PitchRange = 0.2f;
+    public float pitchRange = 0.2f;
 
 
     private float horizontalInput;
@@ -31,10 +31,15 @@ public class TankController : MonoBehaviour
     private float originalPitch;
 
 
-    // Start is called before the first frame update
-    void Start()
+
+    private void Awake()
     {
-        
+        rigidbody = GetComponent<Rigidbody>();
+    }
+
+    private void Start()
+    {
+        originalPitch = movementAudioSource.pitch;
     }
 
     private void Update()
@@ -56,9 +61,9 @@ public class TankController : MonoBehaviour
             if (movementAudioSource.clip == engineDrivingSound)
             {
                 // ... change the clip to idling and play it.
-                movementAudioSource.clip = engineIdling;
-                movementAudio.pitch = Random.Range(m_OriginalPitch - m_PitchRange, m_OriginalPitch + m_PitchRange);
-                movementAudio.Play();
+                movementAudioSource.clip = engineIdlingSound;
+                movementAudioSource.pitch = Random.Range(originalPitch - pitchRange, originalPitch + pitchRange);
+                movementAudioSource.Play();
             }
         }
         else
@@ -67,23 +72,45 @@ public class TankController : MonoBehaviour
             if (movementAudioSource.clip == engineIdlingSound)
             {
                 // ... change the clip to driving and play.
-                m_MovementAudio.clip = m_EngineDriving;
-                m_MovementAudio.pitch = Random.Range(m_OriginalPitch - m_PitchRange, m_OriginalPitch + m_PitchRange);
-                m_MovementAudio.Play();
+                movementAudioSource.clip = engineDrivingSound;
+                movementAudioSource.pitch = Random.Range(originalPitch - pitchRange, originalPitch + pitchRange);
+                movementAudioSource.Play();
             }
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void FixedUpdate()
     {
-        horizontalInput = Input.GetAxis("Horizontal");
-        forwardInput = Input.GetAxis("Vertical");
-
-        transform.Translate(Vector3.forward * Time.deltaTime * forwardSpeed * forwardInput);
-        transform.Rotate(Vector3.up * Time.deltaTime * turnSpeed * horizontalInput);
-
+        
+        Drive();
+        Turn();
     }
 
 
+    private void Drive()
+    {
+        // Create a vector in the direction the tank is facing with a magnitude based on the input, speed and the time between frames.
+        Vector3 movement = transform.forward * movementInputValue * forwardSpeed * Time.deltaTime;
+
+        // Apply this movement to the rigidbody's position.
+        rigidbody.MovePosition(rigidbody.position + movement);
+    }
+
+
+    private void Turn()
+    {
+        // Determine the number of degrees to be turned based on the input, speed and time between frames.
+        float turn = turnInputValue * turnSpeed * Time.deltaTime;
+
+        // Make this into a rotation in the y axis.
+        Quaternion turnRotation = Quaternion.Euler(0f, turn, 0f);
+
+        // Apply this rotation to the rigidbody's rotation.
+        rigidbody.MoveRotation(rigidbody.rotation * turnRotation);
+    }
 }
+
+
+
+
+

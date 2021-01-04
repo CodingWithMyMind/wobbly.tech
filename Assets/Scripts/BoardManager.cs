@@ -79,18 +79,28 @@ public class BoardManager : MonoBehaviour
     }
     public void SetupScene()
     {
+        // make new gameobject for the grid
         gridHolder = new GameObject("Grid").transform;
+
         gridHolder.SetParent(this.transform);
-        Vector3 cellPosition = Vector3.zero;
-        float cellsize = 0.1f;
+        gridHolder.localPosition=Vector3.zero;
+        
+
+        // starting cell position
+        Vector3 cellPosition = new Vector3((rows/2),(columns/2),0);
+
+
+
+
+        float cellsize = 1f;
         Vector3 scaleChange = new Vector3(cellsize,cellsize,cellsize);
         for (int x = 0; x < columns; x++)
         {
             for (int y = 0; y < rows; y++)
             {
-                
-                cellPosition.x = x* cellsize + this.transform.position.x;
-                cellPosition.y = y* cellsize + this.transform.position.y;
+
+                cellPosition.x = x * cellsize + this.transform.position.x - (rows / 2) + (cellsize/2) ;
+                cellPosition.y = y* cellsize + this.transform.position.y - (columns/2) + (cellsize/2);
                 cellPosition.z = this.transform.position.z;
 
                 GameObject cellInstance = Instantiate(cellPrefab, cellPosition, Quaternion.identity) as GameObject;
@@ -105,6 +115,31 @@ public class BoardManager : MonoBehaviour
 
                 //Set the cell alive according with the chance of "spawnChance"
                 cellInstance.GetComponent<CellScript>().isAlive = (Random.value <= spawnChance ? true : false);
+            }
+        }
+        gridHolder.localScale = new Vector3(1f, 1f, 1f);
+    }
+    public void KillAll()
+    {
+        for (int x = 0; x < columns; x++)
+        {
+            for (int y = 0; y < rows; y++)
+            {
+                cellMatrix[x, y].GetComponent<CellScript>().Kill();
+            }
+        }
+    }
+
+    public void AllAlive()
+    {
+        for (int x = 0; x < columns; x++)
+        {
+            for (int y = 0; y < rows; y++)
+            {
+                if (Random.Range(0, 2) > 0)
+                {
+                    cellMatrix[x, y].GetComponent<CellScript>().Alive();
+                }
             }
         }
     }

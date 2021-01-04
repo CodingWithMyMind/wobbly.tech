@@ -100,6 +100,16 @@ public class CellScript : MonoBehaviour
         }
     }
 
+    public void Kill()
+    {
+        isAlive = false;
+    }
+
+    public void Alive()
+    {
+        isAlive = true;
+    }
+
     public void SetPosition(int x, int y)
     {
         this.x = x;

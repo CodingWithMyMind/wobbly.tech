@@ -14,10 +14,10 @@ public class CameraController : MonoBehaviour
         allCameras = FindObjectsOfType<Camera>();
         Debug.Log(allCameras.Length + "Cameras Found");
 
-
+        ActivateCamera(Camera.main);
     }
 
-
+    
     public void ActivateCamera(Camera cameraToTurnOn)
     {
         foreach(Camera c in allCameras)

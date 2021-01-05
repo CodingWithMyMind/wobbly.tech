@@ -16,7 +16,12 @@ public class TankController : MonoBehaviour
     public AudioClip engineIdlingSound;
     // Audio clip of engine driving
     public AudioClip engineDrivingSound;
-    
+
+    public Track LeftTrack;
+    public Track RightTrack;
+
+
+
     public float pitchRange = 0.2f;
 
     public Transform centreOfMass;
@@ -49,7 +54,7 @@ public class TankController : MonoBehaviour
         // Store the value of both input axes.
         movementInputValue = Input.GetAxis(movementAxisName);
         turnInputValue = Input.GetAxis(turnAxisName);
-        rigidbody.centerOfMass = centreOfMass.position;
+        //rigidbody.centerOfMass = centreOfMass.position;
         EngineAudio();
     }
 
@@ -96,6 +101,11 @@ public class TankController : MonoBehaviour
 
         // Apply this movement to the rigidbody's position.
         rigidbody.MovePosition(rigidbody.position + movement);
+
+        //LeftTrack.Drive(movement, rigidbody);
+        //RightTrack.Drive(movement, rigidbody);
+
+        
     }
 
 

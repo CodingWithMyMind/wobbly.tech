@@ -19,6 +19,8 @@ public class TankController : MonoBehaviour
     
     public float pitchRange = 0.2f;
 
+    public Transform centreOfMass;
+
 
     private float horizontalInput;
     private float forwardInput;
@@ -47,7 +49,7 @@ public class TankController : MonoBehaviour
         // Store the value of both input axes.
         movementInputValue = Input.GetAxis(movementAxisName);
         turnInputValue = Input.GetAxis(turnAxisName);
-
+        rigidbody.centerOfMass = centreOfMass.position;
         EngineAudio();
     }
 

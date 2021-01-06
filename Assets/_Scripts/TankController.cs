@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class TankController : MonoBehaviour
 {
+    [SerializeField]
+    private int playerNumber = 1;
+
 
     [SerializeField]
     private float forwardSpeed = 5;
@@ -46,6 +49,11 @@ public class TankController : MonoBehaviour
 
     private void Start()
     {
+
+        movementAxisName = "Vertical" + playerNumber;
+        turnAxisName = "Horizontal" + playerNumber;
+
+
         originalPitch = movementAudioSource.pitch;
     }
 

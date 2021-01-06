@@ -55,7 +55,7 @@ public class BoardManager : MonoBehaviour
 
 
 
-    void NextGeneration()
+   public void NextGeneration()
     {
         // check every cell on x axis
         for (int x = 0; x < columns; x++)

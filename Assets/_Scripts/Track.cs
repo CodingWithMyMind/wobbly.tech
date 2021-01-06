@@ -17,21 +17,11 @@ public class Track : MonoBehaviour
         Debug.Log(grounded);
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        grounded = true;
-    }
+// todo on trigger enter working for track state
 
-    private void OnCollisionExit(Collision collision)
+    private void OnTriggerExit(Collider other)
     {
         grounded = false;
     }
 
-    public void Drive(Vector3 direction, Rigidbody rb)
-    {
-        //if (grounded)
-        {
-            rb.MovePosition(transform.position + direction);
-        }
-    }
 }

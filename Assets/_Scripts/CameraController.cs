@@ -23,7 +23,9 @@ public class CameraController : MonoBehaviour
         foreach(Camera c in allCameras)
         {
             c.enabled = false;
+            c.gameObject.SetActive(false);
         }
         cameraToTurnOn.enabled = true;
+        cameraToTurnOn.gameObject.SetActive(true);
     }
 }
